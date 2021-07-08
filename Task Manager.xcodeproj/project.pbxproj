@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		5F0944142695AF1D004E9718 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F0944122695AF1D004E9718 /* Main.storyboard */; };
 		5F0944162695AF1F004E9718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F0944152695AF1F004E9718 /* Assets.xcassets */; };
 		5F0944192695AF20004E9718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F0944172695AF20004E9718 /* LaunchScreen.storyboard */; };
+		5F0944252696F027004E9718 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0944242696F026004E9718 /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		5F0944152695AF1F004E9718 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F0944182695AF20004E9718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F09441A2695AF20004E9718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F0944242696F026004E9718 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,72 @@
 		5F09440B2695AF1D004E9718 /* Task Manager */ = {
 			isa = PBXGroup;
 			children = (
-				5F09440C2695AF1D004E9718 /* AppDelegate.swift */,
-				5F09440E2695AF1D004E9718 /* SceneDelegate.swift */,
-				5F0944102695AF1D004E9718 /* TodoListViewController.swift */,
-				5F0944122695AF1D004E9718 /* Main.storyboard */,
-				5F0944152695AF1F004E9718 /* Assets.xcassets */,
-				5F0944172695AF20004E9718 /* LaunchScreen.storyboard */,
-				5F09441A2695AF20004E9718 /* Info.plist */,
+				5F09442A2696F133004E9718 /* Common Utils */,
+				5F09442C2696F14A004E9718 /* App Assets */,
+				5F09442B2696F13B004E9718 /* App Settings */,
+				5F0944292696F11E004E9718 /* App Modules */,
 			);
 			path = "Task Manager";
+			sourceTree = "<group>";
+		};
+		5F0944262696F0E2004E9718 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5F0944242696F026004E9718 /* Item.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5F0944272696F0F9004E9718 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5F0944102695AF1D004E9718 /* TodoListViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		5F0944282696F107004E9718 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5F0944122695AF1D004E9718 /* Main.storyboard */,
+				5F0944172695AF20004E9718 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5F0944292696F11E004E9718 /* App Modules */ = {
+			isa = PBXGroup;
+			children = (
+				5F0944282696F107004E9718 /* Views */,
+				5F0944272696F0F9004E9718 /* Controllers */,
+				5F0944262696F0E2004E9718 /* Models */,
+			);
+			path = "App Modules";
+			sourceTree = "<group>";
+		};
+		5F09442A2696F133004E9718 /* Common Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Common Utils";
+			sourceTree = "<group>";
+		};
+		5F09442B2696F13B004E9718 /* App Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5F09440C2695AF1D004E9718 /* AppDelegate.swift */,
+				5F09440E2695AF1D004E9718 /* SceneDelegate.swift */,
+				5F09441A2695AF20004E9718 /* Info.plist */,
+			);
+			path = "App Settings";
+			sourceTree = "<group>";
+		};
+		5F09442C2696F14A004E9718 /* App Assets */ = {
+			isa = PBXGroup;
+			children = (
+				5F0944152695AF1F004E9718 /* Assets.xcassets */,
+			);
+			path = "App Assets";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,7 +161,7 @@
 				};
 			};
 			buildConfigurationList = 5F0944042695AF1D004E9718 /* Build configuration list for PBXProject "Task Manager" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -137,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F0944252696F027004E9718 /* Item.swift in Sources */,
 				5F0944112695AF1D004E9718 /* TodoListViewController.swift in Sources */,
 				5F09440D2695AF1D004E9718 /* AppDelegate.swift in Sources */,
 				5F09440F2695AF1D004E9718 /* SceneDelegate.swift in Sources */,
@@ -288,7 +348,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z28LM9PLJM;
-				INFOPLIST_FILE = "Task Manager/Info.plist";
+				INFOPLIST_FILE = "Task Manager/App Settings/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +356,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hellovidev.Task-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -307,7 +367,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z28LM9PLJM;
-				INFOPLIST_FILE = "Task Manager/Info.plist";
+				INFOPLIST_FILE = "Task Manager/App Settings/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hellovidev.Task-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
