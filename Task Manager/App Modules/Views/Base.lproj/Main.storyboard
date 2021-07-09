@@ -7,6 +7,45 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Boards-->
+        <scene sceneID="Wb5-Be-F2y">
+            <objects>
+                <tableViewController id="682-80-KqP" customClass="BoardViewController" customModule="Task_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dlC-Md-xoG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BoardCell" id="GUH-6a-0hf">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GUH-6a-0hf" id="OOD-r1-mh5">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="682-80-KqP" id="Kaj-RC-cp8"/>
+                            <outlet property="delegate" destination="682-80-KqP" id="8np-Al-qQq"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Boards" id="YYE-m5-Vja">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="6g0-3s-lSj">
+                            <color key="tintColor" systemColor="labelColor"/>
+                            <connections>
+                                <action selector="newBoardAction:" destination="682-80-KqP" id="zXx-0t-xSP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="za0-L9-2T4" kind="show" identifier="goToBoard" id="a7W-9E-Sna"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YLQ-SH-ctB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1628" y="62"/>
+        </scene>
         <!--Task Manager-->
         <scene sceneID="NFK-0N-yNd">
             <objects>
@@ -19,6 +58,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="za0-L9-2T4" id="dOh-AD-7QC"/>
+                            </connections>
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" id="kps-f2-D6x">
@@ -46,7 +88,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ws3-x4-X9u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657.9710144927537" y="61.607142857142854"/>
+            <point key="canvasLocation" x="2472" y="62"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="A7v-LU-0xi">
@@ -59,7 +101,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="za0-L9-2T4" kind="relationship" relationship="rootViewController" id="RE5-If-aIY"/>
+                        <segue destination="682-80-KqP" kind="relationship" relationship="rootViewController" id="nWC-0R-OHP"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qM2-95-L3Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

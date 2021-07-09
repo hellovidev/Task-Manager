@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="BoardEntity" representedClassName="BoardEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="childItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ItemEntity" inverseName="parentBoard" inverseEntity="ItemEntity"/>
+    </entity>
     <entity name="ItemEntity" representedClassName=".ItemEntity" syncable="YES" codeGenerationType="class">
         <attribute name="complete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="parentBoard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BoardEntity" inverseName="childItems" inverseEntity="BoardEntity"/>
     </entity>
     <elements>
-        <element name="ItemEntity" positionX="-91.11944580078125" positionY="486.2931518554688" width="128" height="88"/>
+        <element name="ItemEntity" positionX="-91.11944580078125" positionY="486.2931518554688" width="128" height="103"/>
+        <element name="BoardEntity" positionX="-266.1275634765625" positionY="495.8787536621094" width="128" height="88"/>
     </elements>
 </model>

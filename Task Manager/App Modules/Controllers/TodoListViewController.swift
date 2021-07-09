@@ -26,8 +26,7 @@ class TodoListViewController: UITableViewController {
         //        if let array = self.defaults.array(forKey: "TodoList") as? [Item] {
         //            self.itemArray = array
         //        }
-        
-        self.loadItems()
+        fetchCoreData()
     }
     
     // MARK: - UITableViewDataSource Methods
@@ -118,12 +117,13 @@ class TodoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    private func loadItems() {
-        let request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()
+    func fetchCoreData(for request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()) {
         do {
-            self.itemArray = try self.context?.fetch(request) as! [ItemEntity]
+            if let safeContext = self.context {
+                self.itemArray = try safeContext.fetch(request)
+            }
         } catch {
-            print(error.localizedDescription)
+            print("Fetch request Core Data error: \(error.localizedDescription)")
         }
     }
     
@@ -138,4 +138,48 @@ class TodoListViewController: UITableViewController {
 //            }
 //        }
 //    }
+}
+
+// MARK: - UISearchBarDelegate
+extension TodoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()
+        // Query Language
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.predicate = predicate
+        
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        
+        request.sortDescriptors = [sortDescriptor]
+        
+        fetchCoreData(for: request)
+        
+        self.tableView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count == 0 {
+            fetchCoreData()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+            
+        } else {
+            let request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()
+            // Query Language
+            let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            
+            request.predicate = predicate
+            
+            let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+            
+            request.sortDescriptors = [sortDescriptor]
+            
+            fetchCoreData(for: request)        }
+
+        
+        self.tableView.reloadData()
+    }
 }
