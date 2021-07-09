@@ -6,20 +6,23 @@
 //
 
 import UIKit
+import CoreData
 
 // MARK: - UITableViewController
 class TodoListViewController: UITableViewController {
     
     // MARK: - Private Items
-    private var itemArray = [Item]()
+    private var itemArray = [ItemEntity]()
     
     private let defaults = UserDefaults()
     
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("items.plist")
+    private let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
+
+    //let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("items.plist")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
         //        if let array = self.defaults.array(forKey: "TodoList") as? [Item] {
         //            self.itemArray = array
         //        }
@@ -42,7 +45,7 @@ class TodoListViewController: UITableViewController {
         
         //        item.isComplete! ? (cell.accessoryType = .checkmark) : (cell.accessoryType = .none)
         
-        cell.accessoryType = item.isComplete! ? .checkmark : .none
+        cell.accessoryType = item.complete ? .checkmark : .none
         
         return cell
     }
@@ -51,7 +54,9 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        itemArray[indexPath.row].isComplete = !itemArray[indexPath.row].isComplete!
+        context?.delete(itemArray[indexPath.row])
+        itemArray.remove(at: indexPath.row)
+        //itemArray[indexPath.row].complete = !itemArray[indexPath.row].complete
         
         //        if let isComplete = itemArray[indexPath.row].isComplete {
         //            isComplete ? (itemArray[indexPath.row].isComplete = false) : (itemArray[indexPath.row].isComplete = true)
@@ -76,7 +81,8 @@ class TodoListViewController: UITableViewController {
         let alert = UIAlertController(title: "New task creation", message: "Input task title", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add new item", style: .default, handler: { _ in
-            var newItem = Item()
+                        
+            let newItem = ItemEntity(context: self.context!)
             
             if let text = textField.text {
                 newItem.title = text
@@ -84,7 +90,7 @@ class TodoListViewController: UITableViewController {
                 self.saveItems()
                 //self.defaults.setValue(self.itemArray, forKey: "TodoList")
             }
-            self.tableView.reloadData()
+            
         })
         
         alert.addTextField { alertTextField in
@@ -99,25 +105,37 @@ class TodoListViewController: UITableViewController {
     // MARK: - Model Manipulation Private Methods
     
     private func saveItems() {
-        let encoder = PropertyListEncoder()
+        //let encoder = PropertyListEncoder()
         
         do {
-            let data = try encoder.encode(self.itemArray)
-            try data.write(to: self.dataFilePath!)
+            try self.context?.save()
+            //let data = try encoder.encode(self.itemArray)
+            //try data.write(to: self.dataFilePath!)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    private func loadItems() {
+        let request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()
+        do {
+            self.itemArray = try self.context?.fetch(request) as! [ItemEntity]
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    private func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            
-            do {
-                self.itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
+//    private func loadItems() {
+//        if let data = try? Data(contentsOf: dataFilePath!) {
+//            let decoder = PropertyListDecoder()
+//
+//            do {
+//                self.itemArray = try decoder.decode([Item].self, from: data)
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
 }
