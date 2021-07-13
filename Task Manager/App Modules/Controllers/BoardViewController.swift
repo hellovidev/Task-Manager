@@ -8,13 +8,30 @@
 import UIKit
 import RealmSwift
 
-class BoardViewController: UITableViewController {
+class BoardViewController: SwipeTableViewController {
     private let realm = try! Realm()
     private var boards: Results<BoardEntity>?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.rowHeight = 64
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.fetchBoardsFromLocalDatabase()
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        do {
+            try self.realm.write {
+                if let boardToDelete = self.boards?[indexPath.row] {    self.realm.delete(boardToDelete.items)
+                    self.realm.delete(boardToDelete)
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     // MARK: - TableView DataSource Methods
@@ -24,7 +41,7 @@ class BoardViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BoardCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = boards?[indexPath.row].name
         return cell
     }

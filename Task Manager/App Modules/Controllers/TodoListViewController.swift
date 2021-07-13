@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 // MARK: - UITableViewController
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     // MARK: - Private Items
     private let realm = try! Realm()
@@ -21,10 +21,27 @@ class TodoListViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.rowHeight = 64
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let safeBoardName = selectedBoard?.name {
             self.navigationItem.title = "Board \"\(safeBoardName)\""
+        }
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        do {
+            try self.realm.write {
+                if let itemToDelete = self.items?[indexPath.row] {
+                    self.realm.delete(itemToDelete)
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
@@ -35,8 +52,8 @@ class TodoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
-        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath
+        )
         if let item = items?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType = item.isComplete! ? .checkmark : .none
