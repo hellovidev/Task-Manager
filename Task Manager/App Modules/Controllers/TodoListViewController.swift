@@ -6,45 +6,41 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 // MARK: - UITableViewController
 class TodoListViewController: UITableViewController {
     
     // MARK: - Private Items
-    private var itemArray = [ItemEntity]()
+    private let realm = try! Realm()
+    private var items: Results<ItemEntity>?
     
-    private let defaults = UserDefaults()
-    
-    private let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
-
-    //let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("items.plist")
+    var selectedBoard: BoardEntity? {
+        didSet {
+            fetchItemsFromLocalDatabase()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
-        //        if let array = self.defaults.array(forKey: "TodoList") as? [Item] {
-        //            self.itemArray = array
-        //        }
-        fetchCoreData()
+        if let safeBoardName = selectedBoard?.name {
+            self.navigationItem.title = "Board \"\(safeBoardName)\""
+        }
     }
     
     // MARK: - UITableViewDataSource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return items?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = UITableViewCell(style: .default, reuseIdentifier: "TaskCell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
         
-        let item = itemArray[indexPath.row]
-        cell.textLabel?.text = item.title
-        
-        //        item.isComplete! ? (cell.accessoryType = .checkmark) : (cell.accessoryType = .none)
-        
-        cell.accessoryType = item.complete ? .checkmark : .none
+        if let item = items?[indexPath.row] {
+            cell.textLabel?.text = item.title
+            cell.accessoryType = item.isComplete! ? .checkmark : .none
+        }
         
         return cell
     }
@@ -52,22 +48,17 @@ class TodoListViewController: UITableViewController {
     // MARK: - UITableViewDelegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        context?.delete(itemArray[indexPath.row])
-        itemArray.remove(at: indexPath.row)
-        //itemArray[indexPath.row].complete = !itemArray[indexPath.row].complete
-        
-        //        if let isComplete = itemArray[indexPath.row].isComplete {
-        //            isComplete ? (itemArray[indexPath.row].isComplete = false) : (itemArray[indexPath.row].isComplete = true)
-        //        }
-        
-        //        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-        //            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        //        } else {
-        //            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        //        }
-        saveItems()
-        tableView.reloadData()
+        if let item = items?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    item.isComplete = !item.isComplete!
+                    //self.realm.delete(item)
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -80,16 +71,21 @@ class TodoListViewController: UITableViewController {
         let alert = UIAlertController(title: "New task creation", message: "Input task title", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add new item", style: .default, handler: { _ in
-                        
-            let newItem = ItemEntity(context: self.context!)
-            
-            if let text = textField.text {
-                newItem.title = text
-                self.itemArray.append(newItem)
-                self.saveItems()
-                //self.defaults.setValue(self.itemArray, forKey: "TodoList")
+            if let currentBoard = self.selectedBoard {
+                let newItem = ItemEntity()
+                if let text = textField.text {
+                    newItem.title = text
+                    do {
+                        try self.realm.write {
+                            currentBoard.items.append(newItem)
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        }}catch {
+                            print(error.localizedDescription)
+                        }
+                }
             }
-            
         })
         
         alert.addTextField { alertTextField in
@@ -103,13 +99,11 @@ class TodoListViewController: UITableViewController {
     
     // MARK: - Model Manipulation Private Methods
     
-    private func saveItems() {
-        //let encoder = PropertyListEncoder()
-        
+    private func pushItemsToLocalDatabase(item: ItemEntity) {
         do {
-            try self.context?.save()
-            //let data = try encoder.encode(self.itemArray)
-            //try data.write(to: self.dataFilePath!)
+            try self.realm.write {
+                self.realm.add(item)
+            }
         } catch {
             print(error.localizedDescription)
         }
@@ -117,68 +111,28 @@ class TodoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func fetchCoreData(for request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()) {
-        do {
-            if let safeContext = self.context {
-                self.itemArray = try safeContext.fetch(request)
-            }
-        } catch {
-            print("Fetch request Core Data error: \(error.localizedDescription)")
-        }
+    private func fetchItemsFromLocalDatabase() {
+        self.items = selectedBoard?.items.sorted(byKeyPath: "title", ascending: true)
     }
-    
-//    private func loadItems() {
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//            let decoder = PropertyListDecoder()
-//
-//            do {
-//                self.itemArray = try decoder.decode([Item].self, from: data)
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
 }
 
 // MARK: - UISearchBarDelegate
 extension TodoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()
-        // Query Language
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        
-        request.predicate = predicate
-        
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-        
-        request.sortDescriptors = [sortDescriptor]
-        
-        fetchCoreData(for: request)
-        
+        self.items = self.items?.filter(predicate)
         self.tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count == 0 {
-            fetchCoreData()
-            
+            self.fetchItemsFromLocalDatabase()
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
-            
         } else {
-            let request: NSFetchRequest<ItemEntity> = ItemEntity.fetchRequest()
-            // Query Language
-            let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
-            
-            request.predicate = predicate
-            
-            let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-            
-            request.sortDescriptors = [sortDescriptor]
-            
-            fetchCoreData(for: request)        }
-
+            self.items = self.items?.filter("title CONTAINS[cd] %@", searchText).sorted(byKeyPath: "createdAt", ascending: true)
+        }
         
         self.tableView.reloadData()
     }

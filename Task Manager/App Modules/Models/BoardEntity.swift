@@ -8,12 +8,18 @@
 import Foundation
 import RealmSwift
 
-protocol BoardProtocol: Identifiable, Codable, Object {
+protocol BoardProtocol: Identifiable {
     dynamic var id: String? { get }
-    dynamic var title: String? { get set }
+    dynamic var name: String? { get set }
 }
 
-class BoardEntity: Object {
-    @objc dynamic var name: String = ""
-    @objc dynamic var age: Int = 0
+class BoardEntity: Object, BoardProtocol {
+    @objc dynamic var id: String?
+    @objc dynamic var name: String?
+    var items: List<ItemEntity> = List<ItemEntity>()
+    
+    override init() {
+        super.init()
+        self.id = UUID().uuidString
+    }
 }

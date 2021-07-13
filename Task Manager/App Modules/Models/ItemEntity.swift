@@ -6,22 +6,25 @@
 //
 
 import Foundation
+import RealmSwift
 
-protocol ItemProtocol: Identifiable, Codable {
+protocol ItemProtocol: Identifiable {
     var id: String? { get }
     var title: String? { get set }
     var isComplete: Bool? { get set }
 }
 
-struct Item: ItemProtocol {
-    var id: String?
+class ItemEntity: Object, ItemProtocol {
+    @Persisted var id: String?
+    @Persisted var title: String?
+    @Persisted var isComplete: Bool?
+    @Persisted var createdAt: TimeInterval?
+    var parent: LinkingObjects = LinkingObjects(fromType: BoardEntity.self, property: "items")
     
-    var title: String?
-    
-    var isComplete: Bool?
-    
-    init() {
+    override init() {
+        super.init()
         self.id = UUID().uuidString
         self.isComplete = false
+        self.createdAt = Date().timeIntervalSince1970
     }
 }
