@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 // MARK: - UITableViewController
 class TodoListViewController: SwipeTableViewController {
@@ -14,6 +15,7 @@ class TodoListViewController: SwipeTableViewController {
     // MARK: - Private Items
     private let realm = try! Realm()
     private var items: Results<ItemEntity>?
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var selectedBoard: BoardEntity? {
         didSet {
@@ -23,7 +25,15 @@ class TodoListViewController: SwipeTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView.rowHeight = 64
+        if let safeNavigationBar = self.navigationController?.navigationBar {
+            if let currentBoardHexValue = selectedBoard?.hex {
+                safeNavigationBar.backgroundColor = UIColor(hexString: currentBoardHexValue)
+                safeNavigationBar.tintColor = ContrastColorOf(safeNavigationBar.backgroundColor!, returnFlat: true)
+                self.searchBar.barTintColor = UIColor(hexString: currentBoardHexValue)
+                self.searchBar.tintColor = ContrastColorOf(safeNavigationBar.backgroundColor!, returnFlat: true)
+                safeNavigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(safeNavigationBar.backgroundColor!, returnFlat: true)]
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -52,9 +62,10 @@ class TodoListViewController: SwipeTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAt: indexPath
-        )
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let item = items?[indexPath.row] {
+            cell.backgroundColor = UIColor(hexString: self.selectedBoard?.hex ?? "#333333")?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(items!.count))
+            cell.textLabel?.textColor = ContrastColorOf(cell.backgroundColor!, returnFlat: true)
             cell.textLabel?.text = item.title
             cell.accessoryType = item.isComplete! ? .checkmark : .none
         }
@@ -69,7 +80,9 @@ class TodoListViewController: SwipeTableViewController {
             do {
                 try self.realm.write {
                     item.isComplete = !item.isComplete!
-                    //self.realm.delete(item)
+                    
+                    // If you need to delete items with complete state -> self.realm.delete(item)
+                    
                     self.tableView.reloadData()
                 }
             } catch {
@@ -98,9 +111,10 @@ class TodoListViewController: SwipeTableViewController {
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
-                        }}catch {
-                            print(error.localizedDescription)
                         }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
             }
         })

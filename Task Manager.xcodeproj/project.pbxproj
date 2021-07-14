@@ -14,15 +14,17 @@
 		5F0944162695AF1F004E9718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F0944152695AF1F004E9718 /* Assets.xcassets */; };
 		5F0944192695AF20004E9718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F0944172695AF20004E9718 /* LaunchScreen.storyboard */; };
 		5F0944252696F027004E9718 /* ItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0944242696F026004E9718 /* ItemEntity.swift */; };
-		5FEACDDE269D690300C228E8 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEACDDD269D690300C228E8 /* Realm */; };
-		5FEACDE0269D690300C228E8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEACDDF269D690300C228E8 /* RealmSwift */; };
+		5FEACDDE269D690300C228E8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEACDDD269D690300C228E8 /* SwiftPackageProductDependency */; };
+		5FEACDE0269D690300C228E8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEACDDF269D690300C228E8 /* SwiftPackageProductDependency */; };
 		5FEACDE2269D6B2600C228E8 /* BoardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEACDE1269D6B2600C228E8 /* BoardEntity.swift */; };
-		5FEACDE5269DC45000C228E8 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEACDE4269DC45000C228E8 /* SwipeCellKit */; };
+		5FEACDE5269DC45000C228E8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEACDE4269DC45000C228E8 /* SwiftPackageProductDependency */; };
 		5FEACDE7269DCED500C228E8 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEACDE6269DCED500C228E8 /* SwipeTableViewController.swift */; };
 		5FEF57F92698585200580321 /* BoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF57F82698585200580321 /* BoardViewController.swift */; };
+		FC15BF656EF7548A0A727C2A /* Pods_Task_Manager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34EC1D1530D05B88EA38AF23 /* Pods_Task_Manager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		34EC1D1530D05B88EA38AF23 /* Pods_Task_Manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Task_Manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F0944092695AF1D004E9718 /* Task Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F09440C2695AF1D004E9718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F09440E2695AF1D004E9718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +37,8 @@
 		5FEACDE1269D6B2600C228E8 /* BoardEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardEntity.swift; sourceTree = "<group>"; };
 		5FEACDE6269DCED500C228E8 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		5FEF57F82698585200580321 /* BoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewController.swift; sourceTree = "<group>"; };
+		7508959BDE248CD5435D3279 /* Pods-Task Manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Task Manager.debug.xcconfig"; path = "Target Support Files/Pods-Task Manager/Pods-Task Manager.debug.xcconfig"; sourceTree = "<group>"; };
+		DC3EA5F96C02CE815E3F5A8B /* Pods-Task Manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Task Manager.release.xcconfig"; path = "Target Support Files/Pods-Task Manager/Pods-Task Manager.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,9 +46,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FEACDE0269D690300C228E8 /* RealmSwift in Frameworks */,
-				5FEACDE5269DC45000C228E8 /* SwipeCellKit in Frameworks */,
-				5FEACDDE269D690300C228E8 /* Realm in Frameworks */,
+				5FEACDE0269D690300C228E8 /* BuildFile in Frameworks */,
+				5FEACDE5269DC45000C228E8 /* BuildFile in Frameworks */,
+				5FEACDDE269D690300C228E8 /* BuildFile in Frameworks */,
+				FC15BF656EF7548A0A727C2A /* Pods_Task_Manager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +61,8 @@
 			children = (
 				5F09440B2695AF1D004E9718 /* Task Manager */,
 				5F09440A2695AF1D004E9718 /* Products */,
+				EFDBC193F1E4D3A8F328A9CD /* Pods */,
+				9FE8DF043B006B2498463D14 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +148,24 @@
 			path = "App Assets";
 			sourceTree = "<group>";
 		};
+		9FE8DF043B006B2498463D14 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				34EC1D1530D05B88EA38AF23 /* Pods_Task_Manager.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EFDBC193F1E4D3A8F328A9CD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7508959BDE248CD5435D3279 /* Pods-Task Manager.debug.xcconfig */,
+				DC3EA5F96C02CE815E3F5A8B /* Pods-Task Manager.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,9 +173,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5F09441D2695AF20004E9718 /* Build configuration list for PBXNativeTarget "Task Manager" */;
 			buildPhases = (
+				BF87CC56656003FCD2C22476 /* [CP] Check Pods Manifest.lock */,
 				5F0944052695AF1D004E9718 /* Sources */,
 				5F0944062695AF1D004E9718 /* Frameworks */,
 				5F0944072695AF1D004E9718 /* Resources */,
+				10E8088C48124FBA6D6E4CCF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -158,9 +185,9 @@
 			);
 			name = "Task Manager";
 			packageProductDependencies = (
-				5FEACDDD269D690300C228E8 /* Realm */,
-				5FEACDDF269D690300C228E8 /* RealmSwift */,
-				5FEACDE4269DC45000C228E8 /* SwipeCellKit */,
+				5FEACDDD269D690300C228E8 /* SwiftPackageProductDependency */,
+				5FEACDDF269D690300C228E8 /* SwiftPackageProductDependency */,
+				5FEACDE4269DC45000C228E8 /* SwiftPackageProductDependency */,
 			);
 			productName = "Task Manager";
 			productReference = 5F0944092695AF1D004E9718 /* Task Manager.app */;
@@ -190,8 +217,8 @@
 			);
 			mainGroup = 5F0944002695AF1D004E9718;
 			packageReferences = (
-				5FEACDDC269D690300C228E8 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-				5FEACDE3269DC45000C228E8 /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
+				5FEACDDC269D690300C228E8 /* RemoteSwiftPackageReference */,
+				5FEACDE3269DC45000C228E8 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 5F09440A2695AF1D004E9718 /* Products */;
 			projectDirPath = "";
@@ -214,6 +241,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		10E8088C48124FBA6D6E4CCF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Task Manager/Pods-Task Manager-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Task Manager/Pods-Task Manager-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Task Manager/Pods-Task Manager-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BF87CC56656003FCD2C22476 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Task Manager-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5F0944052695AF1D004E9718 /* Sources */ = {
@@ -370,6 +439,7 @@
 		};
 		5F09441E2695AF20004E9718 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7508959BDE248CD5435D3279 /* Pods-Task Manager.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -389,6 +459,7 @@
 		};
 		5F09441F2695AF20004E9718 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC3EA5F96C02CE815E3F5A8B /* Pods-Task Manager.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -430,7 +501,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5FEACDDC269D690300C228E8 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+		5FEACDDC269D690300C228E8 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
 			requirement = {
@@ -438,7 +509,7 @@
 				minimumVersion = 10.10.0;
 			};
 		};
-		5FEACDE3269DC45000C228E8 /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
+		5FEACDE3269DC45000C228E8 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit.git";
 			requirement = {
@@ -449,19 +520,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5FEACDDD269D690300C228E8 /* Realm */ = {
+		5FEACDDD269D690300C228E8 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5FEACDDC269D690300C228E8 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 5FEACDDC269D690300C228E8 /* RemoteSwiftPackageReference */;
 			productName = Realm;
 		};
-		5FEACDDF269D690300C228E8 /* RealmSwift */ = {
+		5FEACDDF269D690300C228E8 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5FEACDDC269D690300C228E8 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 5FEACDDC269D690300C228E8 /* RemoteSwiftPackageReference */;
 			productName = RealmSwift;
 		};
-		5FEACDE4269DC45000C228E8 /* SwipeCellKit */ = {
+		5FEACDE4269DC45000C228E8 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5FEACDE3269DC45000C228E8 /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
+			package = 5FEACDE3269DC45000C228E8 /* RemoteSwiftPackageReference */;
 			productName = SwipeCellKit;
 		};
 /* End XCSwiftPackageProductDependency section */

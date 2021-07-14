@@ -14,17 +14,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // MARK: - Check Configuration of realm database
         Realm.Configuration.defaultConfiguration = Realm.Configuration(
             schemaVersion: 10,
             migrationBlock: { migration, oldSchemaVersion in
-                migration.deleteData(forType: String(describing: Data.self)
-                )
-                migration.deleteData(forType: String(describing: ItemEntity.self)
-                )
+                migration.deleteData(forType: String(describing: Data.self))
+                migration.deleteData(forType: String(describing: ItemEntity.self))
             },
             deleteRealmIfMigrationNeeded: true
         )
         
+        // MARK: - Try to connect to realm database
         do {
             _ = try Realm()
         } catch {

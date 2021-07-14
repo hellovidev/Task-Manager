@@ -8,12 +8,14 @@
 import Foundation
 import RealmSwift
 
+// MARK: - Item Protocol
 protocol ItemProtocol: Identifiable {
     var id: String? { get }
     var title: String? { get set }
     var isComplete: Bool? { get set }
 }
 
+// MARK: - Item Entity Class (Using Realm)
 class ItemEntity: Object, ItemProtocol {
     @Persisted var id: String?
     @Persisted var title: String?

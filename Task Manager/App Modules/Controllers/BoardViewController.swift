@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class BoardViewController: SwipeTableViewController {
     private let realm = try! Realm()
@@ -14,7 +15,9 @@ class BoardViewController: SwipeTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView.rowHeight = 64
+        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
     }
     
     override func viewDidLoad() {
@@ -42,6 +45,10 @@ class BoardViewController: SwipeTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        cell.backgroundColor = UIColor(hexString: (boards?[indexPath.row].hex)!)
+        
+        cell.textLabel?.textColor = ContrastColorOf(cell.backgroundColor!, returnFlat: true)
+        
         cell.textLabel?.text = boards?[indexPath.row].name
         return cell
     }
